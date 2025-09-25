@@ -1,0 +1,66 @@
+.map-integration {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.map-integration h3 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.map-container-leaflet {
+  display: flex;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.leaflet-container {
+  flex: 2;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.station-legend {
+  flex: 1;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  height: fit-content;
+}
+
+.station-legend h4 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+}
+
+.status-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid white;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.custom-marker {
+  background: none !important;
+  border: none !important;
+}
+
+@media (max-width: 768px) {
+  .map-container-leaflet {
+    flex-direction: column;
+  }
+  
+  .leaflet-container {
+    height: 300px;
+  }
+}

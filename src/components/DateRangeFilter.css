@@ -1,0 +1,54 @@
+.date-range-filter h3 {
+	margin-top: 0;
+	color: #2c3e50;
+	margin-bottom: 15px;
+	font-size: 1rem;
+}
+
+.date-inputs {
+	display: flex;
+	gap: 15px;
+	flex-wrap: wrap;
+}
+
+.date-input {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	flex: 1;
+	min-width: 120px;
+}
+
+.date-input label {
+	font-weight: 600;
+	color: #34495e;
+	font-size: 0.85rem;
+}
+
+.date-input input {
+	padding: 8px 12px;
+	border: 2px solid #bdc3c7;
+	border-radius: 6px;
+	font-size: 0.85rem;
+	transition: border-color 0.3s ease;
+	background: white;
+}
+
+.date-input input:focus {
+	outline: none;
+	border-color: #3498db;
+	box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+/* Floating version adjustments */
+.floating-date-filter .date-range-filter {
+	margin: 0;
+}
+
+.floating-date-filter .date-inputs {
+	gap: 12px;
+}
+
+.floating-date-filter .date-input {
+	min-width: 110px;
+}
