@@ -115,28 +115,23 @@ export const DatabaseService = {
 
 			// Sum values from this row (instead of Math.max)
 			const current = groupedByDate[dateKey];
-			current.microcystis_flos_aquae +=
-				parseFloat(
-					row.microcystis_flos_aquae ||
-						row[
-							"cyanophyta_chroococales_2-microcystis_flos-aquae"
-						] ||
-						0
-				) * 1000000;
-			current.cylindrospermopsis_raciborskyi +=
-				parseFloat(
-					row.cylindrospermopsis_raciborskyi ||
-						row[
-							"cyanophyta_hormogonales_2-cylindrospermopsis_raciborskyi"
-						] ||
-						0
-				) * 1000000;
-			current.aphanizomenon_ovalisporum +=
-				parseFloat(
-					row.aphanizomenon_ovalisporum ||
-						row["cyanophyta_hormogonales_2-aphanizomenon_oval"] ||
-						0
-				) * 1000000;
+			current.microcystis_flos_aquae += parseFloat(
+				row.microcystis_flos_aquae ||
+					row["cyanophyta_chroococales_2-microcystis_flos-aquae"] ||
+					0
+			);
+			current.cylindrospermopsis_raciborskyi += parseFloat(
+				row.cylindrospermopsis_raciborskyi ||
+					row[
+						"cyanophyta_hormogonales_2-cylindrospermopsis_raciborskyi"
+					] ||
+					0
+			);
+			current.aphanizomenon_ovalisporum += parseFloat(
+				row.aphanizomenon_ovalisporum ||
+					row["cyanophyta_hormogonales_2-aphanizomenon_oval"] ||
+					0
+			);
 		});
 
 		// Convert back to array and sort
