@@ -52,6 +52,11 @@ class CyanobacteriaDataLoader {
 	}
 
 	static mergeCyanobacteriaData(data1, data2) {
+		console.log("Merging data1:", data1.length, "records");
+		console.log("Merging data2:", data2.length, "records");
+		console.log("Sample data1 row:", data1[0]);
+		console.log("Sample data2 row:", data2[0]);
+
 		const merged = data1.map((row1) => {
 			const row2 = data2.find((r) => r.date === row1.date);
 			return {
@@ -73,6 +78,9 @@ class CyanobacteriaDataLoader {
 				),
 			};
 		});
+
+		console.log("Merged data:", merged.length, "records");
+		console.log("Sample merged row:", merged[0]);
 
 		return merged.sort((a, b) => a.date - b.date);
 	}
