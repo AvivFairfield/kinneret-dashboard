@@ -54,16 +54,49 @@ class CyanobacteriaDataLoader {
 	static mergeCyanobacteriaData(data1, data2) {
 		console.log("Merging data1:", data1.length, "records");
 		console.log("Merging data2:", data2.length, "records");
-		console.log("Sample data1 row:", data1[0]);
-		console.log("Sample data2 row:", data2[0]);
 
+		// If data1 is empty but data2 has data, use data2 as base
+		if (data1.length === 0 && data2.length > 0) {
+			console.log("data1 is empty, using data2 as base");
+			return data2
+				.map((row2) => ({
+					date: new Date(row2.date.replace(/"/g, "")),
+					microcystis_flos_aquae: 0, // No data from data1
+					cylindrospermopsis_raciborskyi: 0, // No data from data1
+					aphanizomenon_ovalisporum: parseFloat(
+						row2["cyanophyta_hormogonales_2-aphanizomenon_oval"] ||
+							0
+					),
+				}))
+				.sort((a, b) => a.date - b.date);
+		}
+
+		// If data2 is empty but data1 has data, use data1 as base
+		if (data2.length === 0 && data1.length > 0) {
+			console.log("data2 is empty, using data1 as base");
+			return data1
+				.map((row1) => ({
+					date: new Date(row1.date.replace(/"/g, "")),
+					microcystis_flos_aquae: parseFloat(
+						row1[
+							"cyanophyta_chroococales_2-microcystis_flos-aquae"
+						] || 0
+					),
+					cylindrospermopsis_raciborskyi: parseFloat(
+						row1[
+							"cyanophyta_hormogonales_2-cylindrospermopsis_raciborskyi"
+						] || 0
+					),
+					aphanizomenon_ovalisporum: 0, // No data from data2
+				}))
+				.sort((a, b) => a.date - b.date);
+		}
+
+		// Original merge logic for when both have data
 		const merged = data1.map((row1) => {
 			const row2 = data2.find((r) => r.date === row1.date);
 			return {
-				...row1,
-				...row2,
 				date: new Date(row1.date.replace(/"/g, "")),
-				// Map the CSV column names to chart-friendly names
 				microcystis_flos_aquae: parseFloat(
 					row1["cyanophyta_chroococales_2-microcystis_flos-aquae"] ||
 						0
@@ -78,9 +111,6 @@ class CyanobacteriaDataLoader {
 				),
 			};
 		});
-
-		console.log("Merged data:", merged.length, "records");
-		console.log("Sample merged row:", merged[0]);
 
 		return merged.sort((a, b) => a.date - b.date);
 	}
