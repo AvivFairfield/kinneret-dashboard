@@ -18,10 +18,14 @@ class CyanobacteriaDataLoader {
 			return new Promise((resolve, reject) => {
 				Papa.parse(csvText, {
 					header: true,
-					skipEmptyLines: true,
+					skipEmptyLines: false, // Don't skip lines with empty values
 					complete: (results) => {
 						console.log(
 							`Parsed ${results.data.length} rows from ${filePath}`
+						);
+						console.log(
+							"First few rows:",
+							results.data.slice(0, 3)
 						);
 						if (results.errors.length > 0) {
 							console.warn(
