@@ -57,7 +57,7 @@ function App() {
 	return (
 		<div className="App">
 			<header className="App-header">
-				<h1>Kinneret Lake Water Quality Dashboard</h1>
+				<h1>Hydraph - Kinneret Lake Water Quality Dashboard</h1>
 				<p>
 					Real-time monitoring and analysis of Lake Kinneret's
 					ecosystem
