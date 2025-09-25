@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import CyanobacteriaDataLoader from "../utils/CyanobacteriaDataLoader";
 import {
 	LineChart,
 	Line,
@@ -12,42 +13,46 @@ import {
 import { format } from "date-fns";
 import AIInsights from "./AIInsights";
 import "./ChartWithFilters.css";
-const CyanobacteriaChart = ({ data }) => {
+const CyanobacteriaChart = ({ dateRange, data: chartData }) => {
+	const [loading, setLoading] = useState(false);
 	const [visibleLines, setVisibleLines] = useState({
 		microcystis_flos_aquae: true,
 		cylindrospermopsis_raciborskyi: true,
 		aphanizomenon_ovalisporum: true,
 	});
-	const chartData = data.map((item) => ({
+
+	const toggleLine = (lineKey) => {
+		setVisibleLines((prev) => ({
+			...prev,
+			[lineKey]: !prev[lineKey],
+		}));
+	};
+
+	if (!chartData || chartData.length === 0)
+		return <div>No cyanobacteria data available</div>;
+
+	const processedChartData = chartData.map((item) => ({
 		date: format(item.date, "yyyy-MM"),
 		microcystis_flos_aquae: item.microcystis_flos_aquae,
 		cylindrospermopsis_raciborskyi: item.cylindrospermopsis_raciborskyi,
 		aphanizomenon_ovalisporum: item.aphanizomenon_ovalisporum,
 	}));
-	const toggleLine = (lineKey) => {
-		setVisibleLines((prev) => ({ ...prev, [lineKey]: !prev[lineKey] }));
-	};
 	return (
 		<div className="chart-with-filters">
-			{" "}
 			<div className="chart-filters">
-				{" "}
-				<h4>Show Parameters:</h4>{" "}
+				<h4>Show Parameters:</h4>
 				<div className="filter-checkboxes">
-					{" "}
 					<label>
-						{" "}
 						<input
 							type="checkbox"
 							checked={visibleLines.microcystis_flos_aquae}
 							onChange={() =>
 								toggleLine("microcystis_flos_aquae")
 							}
-						/>{" "}
-						Microcystis flos-aquae (cells/mL){" "}
-					</label>{" "}
+						/>
+						Microcystis flos-aquae (cells/mL)
+					</label>
 					<label>
-						{" "}
 						<input
 							type="checkbox"
 							checked={
@@ -56,28 +61,31 @@ const CyanobacteriaChart = ({ data }) => {
 							onChange={() =>
 								toggleLine("cylindrospermopsis_raciborskyi")
 							}
-						/>{" "}
-						Cylindrospermopsis raciborskyi (cells/mL){" "}
-					</label>{" "}
+						/>
+						Cylindrospermopsis raciborskyi (cells/mL)
+					</label>
 					<label>
-						{" "}
 						<input
 							type="checkbox"
 							checked={visibleLines.aphanizomenon_ovalisporum}
 							onChange={() =>
 								toggleLine("aphanizomenon_ovalisporum")
 							}
-						/>{" "}
-						Aphanizomenon ovalisporum (cells/mL){" "}
-					</label>{" "}
-				</div>{" "}
-			</div>{" "}
+						/>
+						Aphanizomenon ovalisporum (cells/mL)
+					</label>
+				</div>
+			</div>
 			<ResponsiveContainer width="100%" height={400}>
-				{" "}
-				<LineChart data={chartData}>
-					{" "}
-					<CartesianGrid strokeDasharray="3 3" />{" "}
-					<XAxis dataKey="date" /> <YAxis /> <Tooltip /> <Legend />{" "}
+				<LineChart
+					data={processedChartData}
+					margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+				>
+					<CartesianGrid strokeDasharray="3 3" />
+					<XAxis dataKey="date" />
+					<YAxis />
+					<Tooltip />
+					<Legend />
 					{visibleLines.microcystis_flos_aquae && (
 						<Line
 							type="monotone"
@@ -85,7 +93,7 @@ const CyanobacteriaChart = ({ data }) => {
 							stroke="#e74c3c"
 							name="Microcystis flos-aquae (cells/mL)"
 						/>
-					)}{" "}
+					)}
 					{visibleLines.cylindrospermopsis_raciborskyi && (
 						<Line
 							type="monotone"
@@ -93,7 +101,7 @@ const CyanobacteriaChart = ({ data }) => {
 							stroke="#f39c12"
 							name="Cylindrospermopsis raciborskyi (cells/mL)"
 						/>
-					)}{" "}
+					)}
 					{visibleLines.aphanizomenon_ovalisporum && (
 						<Line
 							type="monotone"
@@ -101,14 +109,14 @@ const CyanobacteriaChart = ({ data }) => {
 							stroke="#3498db"
 							name="Aphanizomenon ovalisporum (cells/mL)"
 						/>
-					)}{" "}
-				</LineChart>{" "}
-			</ResponsiveContainer>{" "}
+					)}
+				</LineChart>
+			</ResponsiveContainer>
 			<AIInsights
-				data={data}
+				data={chartData}
 				chartType="cyanobacteria"
 				title="Cyanobacteria Analysis"
-			/>{" "}
+			/>
 		</div>
 	);
 };

@@ -8,6 +8,7 @@ import AlertSystem from "./AlertSystem";
 import DataExport from "./DataExport";
 import MapIntegration from "./MapIntegration";
 import FileUpload from "./FileUpload";
+import FileManager from "./FileManager";
 import RAGSearch from "./RAGSearch";
 import "./Dashboard.css";
 
@@ -16,6 +17,7 @@ const Dashboard = ({ data, onDataUpdate }) => {
 		start: new Date("2020-01-01"),
 		end: new Date("2023-12-31"),
 	});
+	const [refreshKey, setRefreshKey] = useState(0);
 
 	const filterDataByDate = (dataset) => {
 		return dataset.filter(
@@ -23,21 +25,11 @@ const Dashboard = ({ data, onDataUpdate }) => {
 		);
 	};
 
-	const handleDataUpload = (newData, filename) => {
-		// Determine data type based on filename or content
-		if (
-			filename.toLowerCase().includes("cyano") ||
-			filename.toLowerCase().includes("bacteria")
-		) {
-			onDataUpdate("cyanobacteria", newData);
-		} else if (
-			filename.toLowerCase().includes("chemistry") ||
-			filename.toLowerCase().includes("quality")
-		) {
-			onDataUpdate("chemistry", newData);
-		} else {
-			onDataUpdate("probeProfiles", newData);
-		}
+	const handleDataUpload = async (newData, filename, dataType) => {
+		// Update dashboard data
+		await onDataUpdate();
+		// Force FileManager to refresh
+		setRefreshKey((prev) => prev + 1);
 	};
 
 	return (
@@ -61,7 +53,12 @@ const Dashboard = ({ data, onDataUpdate }) => {
 					</div>
 				</div>
 
-				{/* Second Row: Data Summary */}
+				{/* File Manager gets its own row */}
+				<div className="file-manager-row">
+					<FileManager key={refreshKey} onDataUpdate={onDataUpdate} />
+				</div>
+
+				{/* Data Summary */}
 				<div className="row-4">
 					<div className="summary-section">
 						<DataSummary data={data} dateRange={dateRange} />
@@ -90,6 +87,7 @@ const Dashboard = ({ data, onDataUpdate }) => {
 					<div className="chart-section">
 						<h2>Cyanobacteria Levels</h2>
 						<CyanobacteriaChart
+							dateRange={dateRange}
 							data={filterDataByDate(data.cyanobacteria)}
 						/>
 					</div>
@@ -99,6 +97,7 @@ const Dashboard = ({ data, onDataUpdate }) => {
 					<div className="chart-section">
 						<h2>Water Quality Parameters</h2>
 						<WaterQualityChart
+							dateRange={dateRange}
 							data={filterDataByDate(data.chemistry)}
 						/>
 					</div>
@@ -106,8 +105,9 @@ const Dashboard = ({ data, onDataUpdate }) => {
 
 				<div className="chart-row">
 					<div className="chart-section">
-						<h2>Temperature & pH Trends</h2>
+						<h2>Probe Profiles</h2>
 						<TimeSeriesChart
+							dateRange={dateRange}
 							data={filterDataByDate(data.probeProfiles)}
 						/>
 					</div>

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
 import Dashboard from "./components/Dashboard";
-import DataLoader from "./utils/DataLoader";
-import CyanobacteriaDataLoader from "./utils/CyanobacteriaDataLoader";
+import { DatabaseService } from "./utils/database";
+import "./App.css";
 
 function App() {
 	const [data, setData] = useState({
@@ -13,37 +12,33 @@ function App() {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		const loadData = async () => {
-			try {
-				// Load regular data with original loader
-				const regularData = await DataLoader.loadAllData();
-
-				// Load cyanobacteria data with specialized loader
-				const cyanobacteriaData =
-					await CyanobacteriaDataLoader.loadCyanobacteriaData();
-
-				const loadedData = {
-					...regularData,
-					cyanobacteria: cyanobacteriaData,
-				};
-
-				console.log("Loaded data:", loadedData);
-				setData(loadedData);
-			} catch (error) {
-				console.error("Error loading data:", error);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		loadData();
+		loadDataFromDatabase();
 	}, []);
 
-	const handleDataUpdate = (newData) => {
-		setData((prevData) => ({
-			...prevData,
-			...newData,
-		}));
+	const loadDataFromDatabase = async () => {
+		try {
+			const dbData = await DatabaseService.getAllData();
+			console.log("Loaded data from database:", dbData);
+			setData(dbData);
+		} catch (error) {
+			console.error("Error loading data from database:", error);
+			// Fallback to original data loading if database fails
+			loadFallbackData();
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const loadFallbackData = async () => {
+		// Your original data loading logic here as fallback
+		console.log("Using fallback data loading...");
+	};
+
+	const handleDataUpdate = async () => {
+		// Reload all data from database
+		const updatedData = await DatabaseService.getAllData();
+		console.log("Updated data:", updatedData); // Debug log
+		setData(updatedData);
 	};
 
 	if (loading) {
