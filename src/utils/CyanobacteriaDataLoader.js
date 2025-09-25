@@ -3,14 +3,26 @@ import Papa from "papaparse";
 class CyanobacteriaDataLoader {
 	static async loadCSV(filePath) {
 		try {
+			console.log(`Attempting to load: ${filePath}`);
 			const response = await fetch(filePath);
+
+			if (!response.ok) {
+				throw new Error(
+					`HTTP ${response.status}: ${response.statusText}`
+				);
+			}
+
 			const csvText = await response.text();
+			console.log(`CSV text length: ${csvText.length} characters`);
 
 			return new Promise((resolve, reject) => {
 				Papa.parse(csvText, {
 					header: true,
 					skipEmptyLines: true,
 					complete: (results) => {
+						console.log(
+							`Parsed ${results.data.length} rows from ${filePath}`
+						);
 						if (results.errors.length > 0) {
 							console.warn(
 								"CSV parsing warnings:",
@@ -20,6 +32,10 @@ class CyanobacteriaDataLoader {
 						resolve(results.data);
 					},
 					error: (error) => {
+						console.error(
+							`Papa parse error for ${filePath}:`,
+							error
+						);
 						reject(error);
 					},
 				});
