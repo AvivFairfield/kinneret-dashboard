@@ -59,6 +59,11 @@ class CyanobacteriaDataLoader {
 			]);
 
 			console.log("CSV files loaded successfully");
+			console.log("cyanobacteria1 length:", cyanobacteria1.length);
+			console.log("cyanobacteria2 length:", cyanobacteria2.length);
+			console.log("cyanobacteria1 sample:", cyanobacteria1[0]);
+			console.log("cyanobacteria2 sample:", cyanobacteria2[0]);
+
 			return this.mergeCyanobacteriaData(cyanobacteria1, cyanobacteria2);
 		} catch (error) {
 			console.error("Failed to load cyanobacteria CSV files:", error);
