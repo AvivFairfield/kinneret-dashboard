@@ -1,54 +1,158 @@
-.date-range-filter h3 {
-	margin-top: 0;
+.date-range-filter.minimized {
+	background: transparent;
+	backdrop-filter: none;
+	border-radius: 50%;
+	padding: 0;
+	box-shadow: none;
+	border: none;
+	position: relative;
+	overflow: hidden;
+	width: 60px;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.3s ease;
+}
+
+.date-range-filter.expanded {
+	background: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(20px);
+	border-radius: 16px;
+	padding: 1.5rem;
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	position: relative;
+	overflow: hidden;
+	transition: all 0.3s ease;
+	animation: expandIn 0.3s ease-out;
+	min-width: 320px;
+}
+
+@keyframes expandIn {
+	from {
+		opacity: 0;
+		transform: scale(0.8);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+.date-filter-toggle {
+	background: none;
+	border: none;
+	font-size: 2rem;
+	cursor: pointer;
+	padding: 0;
+	transition: all 0.3s ease;
+	border-radius: 50%;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.date-filter-toggle:hover {
+	transform: scale(1.1);
+	background: rgba(102, 126, 234, 0.1);
+	border-radius: 50%;
+}
+
+.date-filter-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+.date-filter-header h3 {
+	margin: 0;
 	color: #2c3e50;
-	margin-bottom: 15px;
+	font-size: 1.1rem;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.date-filter-header h3::before {
+	content: "📅";
+	font-size: 1.2rem;
+}
+
+.minimize-btn {
+	background: rgba(102, 126, 234, 0.1);
+	border: none;
+	border-radius: 50%;
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
 	font-size: 1rem;
+	color: #667eea;
+	transition: all 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.minimize-btn:hover {
+	background: rgba(102, 126, 234, 0.2);
+	transform: scale(1.1);
 }
 
 .date-inputs {
 	display: flex;
-	gap: 15px;
+	gap: 1rem;
 	flex-wrap: wrap;
 }
 
 .date-input {
 	display: flex;
 	flex-direction: column;
-	gap: 5px;
+	gap: 8px;
 	flex: 1;
-	min-width: 120px;
+	min-width: 140px;
 }
 
 .date-input label {
 	font-weight: 600;
-	color: #34495e;
-	font-size: 0.85rem;
+	color: #4a5568;
+	font-size: 0.9rem;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.date-input label::before {
+	content: "🗓️";
+	font-size: 0.9rem;
 }
 
 .date-input input {
-	padding: 8px 12px;
-	border: 2px solid #bdc3c7;
-	border-radius: 6px;
-	font-size: 0.85rem;
-	transition: border-color 0.3s ease;
-	background: white;
+	padding: 12px 16px;
+	border: 2px solid rgba(102, 126, 234, 0.2);
+	border-radius: 12px;
+	font-size: 0.9rem;
+	font-weight: 500;
+	transition: all 0.3s ease;
+	background: rgba(255, 255, 255, 0.8);
+	backdrop-filter: blur(10px);
+	color: #2d3748;
 }
 
 .date-input input:focus {
 	outline: none;
-	border-color: #3498db;
-	box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+	border-color: #667eea;
+	box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+	background: rgba(255, 255, 255, 0.95);
+	transform: translateY(-1px);
 }
 
-/* Floating version adjustments */
-.floating-date-filter .date-range-filter {
-	margin: 0;
-}
-
-.floating-date-filter .date-inputs {
-	gap: 12px;
-}
-
-.floating-date-filter .date-input {
-	min-width: 110px;
+.date-input input:hover {
+	border-color: rgba(102, 126, 234, 0.4);
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }

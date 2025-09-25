@@ -44,6 +44,17 @@ function App() {
 	if (loading) {
 		return (
 			<div className="App">
+				<div className="water-particles">
+					<div className="water-particle"></div>
+					<div className="water-particle"></div>
+					<div className="water-particle"></div>
+					<div className="water-particle"></div>
+					<div className="water-particle"></div>
+					<div className="water-particle"></div>
+					<div className="water-particle"></div>
+					<div className="water-particle"></div>
+					<div className="water-particle"></div>
+				</div>
 				<div className="loading">Loading Kinneret Lake data...</div>
 			</div>
 		);
@@ -51,12 +62,32 @@ function App() {
 
 	return (
 		<div className="App">
+			<div className="water-particles">
+				<div className="water-particle"></div>
+				<div className="water-particle"></div>
+				<div className="water-particle"></div>
+				<div className="water-particle"></div>
+				<div className="water-particle"></div>
+				<div className="water-particle"></div>
+				<div className="water-particle"></div>
+				<div className="water-particle"></div>
+				<div className="water-particle"></div>
+			</div>
 			<header className="App-header">
+				<div className="header-droplets">
+					<div className="header-droplet"></div>
+					<div className="header-droplet"></div>
+					<div className="header-droplet"></div>
+					<div className="header-droplet"></div>
+					<div className="header-droplet"></div>
+					<div className="header-droplet"></div>
+				</div>
 				<h1>Hydraph - Kinneret Lake Water Quality Dashboard</h1>
 				<p>
 					Real-time monitoring and analysis of Lake Kinneret's
 					ecosystem
 				</p>
+				<div className="header-wave"></div>
 			</header>
 			<Dashboard data={data} onDataUpdate={handleDataUpdate} />
 		</div>

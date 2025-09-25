@@ -1,0 +1,47 @@
+.environmental-alerts {
+	background: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(15px);
+	border-radius: 16px;
+	padding: 1.5rem;
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.alert-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.75rem;
+	margin: 0.5rem 0;
+	border-radius: 8px;
+	border-left: 4px solid #f59e0b;
+	background: rgba(251, 191, 36, 0.1);
+	transition: all 0.2s ease;
+}
+
+.alert-item:hover {
+	transform: translateX(4px);
+	box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+}
+
+.alert-content {
+	flex: 1;
+}
+
+.alert-message {
+	font-weight: 600;
+	color: #92400e;
+	margin-bottom: 0.25rem;
+	font-size: 0.9rem;
+}
+
+.alert-date {
+	font-size: 0.8rem;
+	color: #78716c;
+	opacity: 0.8;
+}
+
+.alert-icon {
+	font-size: 1.2rem;
+	margin-right: 0.5rem;
+}

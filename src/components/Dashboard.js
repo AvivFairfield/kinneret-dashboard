@@ -21,9 +21,34 @@ const Dashboard = ({ data, onDataUpdate }) => {
 	const [refreshKey, setRefreshKey] = useState(0);
 
 	const filterDataByDate = (dataset) => {
-		return dataset.filter(
-			(item) => item.date >= dateRange.start && item.date <= dateRange.end
-		);
+		try {
+			if (!dataset || !Array.isArray(dataset)) return [];
+
+			const safeStart =
+				dateRange?.start instanceof Date &&
+				!isNaN(dateRange.start.getTime())
+					? dateRange.start
+					: new Date("2000-01-01");
+
+			const safeEnd =
+				dateRange?.end instanceof Date &&
+				!isNaN(dateRange.end.getTime())
+					? dateRange.end
+					: new Date("2023-12-31");
+
+			return dataset.filter((item) => {
+				if (!item?.date) return false;
+
+				const itemDate =
+					item.date instanceof Date ? item.date : new Date(item.date);
+				if (isNaN(itemDate.getTime())) return false;
+
+				return itemDate >= safeStart && itemDate <= safeEnd;
+			});
+		} catch (error) {
+			console.warn("Error filtering data by date:", error);
+			return dataset || [];
+		}
 	};
 
 	const handleDataUpload = async (newData, filename, dataType) => {
