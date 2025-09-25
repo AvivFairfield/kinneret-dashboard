@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import TimeSeriesChart from "./TimeSeriesChart";
 import CyanobacteriaChart from "./CyanobacteriaChart";
-import WaterQualityChart from "./WaterQualityChart";
+import PHChart from "./PHChart";
+import ChemicalParametersChart from "./ChemicalParametersChart";
 import DataSummary from "./DataSummary";
 import DateRangeFilter from "./DateRangeFilter";
 import AlertSystem from "./AlertSystem";
@@ -95,8 +96,18 @@ const Dashboard = ({ data, onDataUpdate }) => {
 
 				<div className="chart-row">
 					<div className="chart-section">
-						<h2>Water Quality Parameters</h2>
-						<WaterQualityChart
+						<h2>pH Levels</h2>
+						<PHChart
+							dateRange={dateRange}
+							data={filterDataByDate(data.chemistry)}
+						/>
+					</div>
+				</div>
+
+				<div className="chart-row">
+					<div className="chart-section">
+						<h2>Chemical Parameters</h2>
+						<ChemicalParametersChart
 							dateRange={dateRange}
 							data={filterDataByDate(data.chemistry)}
 						/>
